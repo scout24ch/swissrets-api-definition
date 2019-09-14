@@ -21,7 +21,7 @@
 
 ### POST /api/owners/{ownerId}/imports
 
-> Schededules an import for the given owner and returns an imporidentifier, which can be used to poll the status of the import.
+> Schededules an import for the given owner and returns an import identifier, which can be used to poll the status of the import.
 
 ### GET /api/owners/{ownerId}/imports/{importId}
 
