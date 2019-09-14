@@ -1,0 +1,217 @@
+{
+  "swagger": "2.0",
+  "info": { "version": "v0.5", "title": "ImmoHub API" },
+  "paths": {
+    "/api/meta": {
+      "get": {
+        "tags": ["Import"],
+        "summary": "Returns metadata about supported functionality of this endpoint.",
+        "operationId": "Get",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/MetaInfoRespDto" }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": { "$ref": "#/definitions/ActionResult" }
+          }
+        }
+      }
+    },
+    "/api/owners/{ownerId}/imports": {
+      "post": {
+        "tags": ["Import"],
+        "summary": "Initiates an import and returns a new import identifier. The import data is expected as multipart content.",
+        "operationId": "Post",
+        "consumes": ["multipart/form-data"],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "query",
+            "description": "The owner identifier.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "StatusChangeCallbackUri",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "The owner identifier.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": { "$ref": "#/definitions/ActionResult" }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": { "$ref": "#/definitions/ActionResult" }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": { "$ref": "#/definitions/NotFoundResult" }
+          }
+        }
+      }
+    },
+    "/api/owners/{ownerId}/imports/{importId}/status": {
+      "get": {
+        "tags": ["Import"],
+        "summary": "Returns status information for the specified import identifier.",
+        "operationId": "Get",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "query",
+            "description": "The owner identifier.",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "importId",
+            "in": "path",
+            "description": "The import identifier.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "The owner identifier.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": { "$ref": "#/definitions/ActionResult" }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": { "$ref": "#/definitions/NotFoundResult" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "MetaInfoRespDto": {
+      "type": "object",
+      "properties": {
+        "supportsLocalAssets": { "type": "boolean" },
+        "xsdValidationSupport": {
+          "enum": ["Synchronous", "Asynchronous"],
+          "type": "string"
+        },
+        "uploadSupportedMimeTypes": {
+          "uniqueItems": false,
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "ActionResult": { "type": "object", "properties": {} },
+    "ImportStatusRespDto": {
+      "type": "object",
+      "properties": {
+        "importId": { "type": "string" },
+        "status": {
+          "enum": ["None", "Pending", "Processing", "Failed", "Completed"],
+          "type": "string"
+        },
+        "importStatistics": { "$ref": "#/definitions/ImportStatisticsRespDto" }
+      }
+    },
+    "ImportStatisticsRespDto": {
+      "type": "object",
+      "properties": {
+        "totalPropertiesImportedSuccess": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalPropertiesImportedFailed": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalAssetsImportedSuccess": { "format": "int32", "type": "integer" },
+        "totalAssetsImportedFailed": { "format": "int32", "type": "integer" },
+        "processingMessages": {
+          "uniqueItems": false,
+          "type": "array",
+          "items": { "$ref": "#/definitions/ImportLogRespDto" }
+        }
+      }
+    },
+    "ImportLogRespDto": {
+      "type": "object",
+      "properties": {
+        "level": { "enum": ["Info", "Warn", "Error"], "type": "string" },
+        "errorCode": {
+          "enum": [
+            "None",
+            "XmlSchemaValidationFailed",
+            "ImportFileNotFound",
+            "FailedConcatenatingImportFiles",
+            "AssetNotFound",
+            "OwnerNotFound"
+          ],
+          "type": "string"
+        },
+        "objectId": { "type": "string" },
+        "objectType": {
+          "enum": ["Project", "Unit", "Property"],
+          "type": "string"
+        },
+        "message": { "type": "string" }
+      }
+    },
+    "NotFoundResult": {
+      "type": "object",
+      "properties": {
+        "statusCode": { "format": "int32", "type": "integer", "readOnly": true }
+      }
+    }
+  }
+}
