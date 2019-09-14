@@ -26,7 +26,7 @@
 
 ## Endpoints
 
-A detailed swagger specification of the API can be found [here](/swagger.json).
+A detailed swagger specification of the API can be found [here](/docs/swagger.json).
 
 ### GET /api/meta
 
