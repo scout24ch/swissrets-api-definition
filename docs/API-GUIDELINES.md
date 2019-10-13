@@ -6,6 +6,8 @@
 
 * Only full imports are supported. All properties not referenced in the import file will be deleted/deactivated on the platform. 
 
+* Only one XML import file can be uploaded per import request.
+
 * API actions are not necessarily idempotent. E.g. an import for an owner can be blocked while another import for that owner is running (returns `HTTP 409 Conflict`).
 
 * The import processing is asynchronous. The state of the import can be polled by the `/api/owners/{ownerId}/imports/{importId}` endpoint.
