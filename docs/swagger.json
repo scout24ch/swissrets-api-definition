@@ -1,6 +1,6 @@
 {
   "swagger": "2.0",
-  "info": { "version": "v0.5", "title": "ImmoHub API" },
+  "info": { "version": "v0.5", "title": "SwissRETS API" },
   "paths": {
     "/api/meta": {
       "get": {
