@@ -4,9 +4,11 @@
   "paths": {
     "/api/meta": {
       "get": {
-        "tags": ["Import"],
+        "tags": [
+          "Import"
+        ],
         "summary": "Returns metadata about supported functionality of this endpoint.",
-        "operationId": "Get",
+        "operationId": "GetMeta",
         "consumes": [],
         "produces": [
           "text/plain",
@@ -19,21 +21,29 @@
         "responses": {
           "200": {
             "description": "Success",
-            "schema": { "$ref": "#/definitions/MetaInfoRespDto" }
+            "schema": {
+              "$ref": "#/definitions/MetaInfoRespDto"
+            }
           },
           "403": {
             "description": "Forbidden",
-            "schema": { "$ref": "#/definitions/ActionResult" }
+            "schema": {
+              "$ref": "#/definitions/ActionResult"
+            }
           }
         }
       }
     },
     "/api/owners/{ownerId}/imports": {
       "post": {
-        "tags": ["Import"],
+        "tags": [
+          "Import"
+        ],
         "summary": "Initiates an import and returns a new import identifier. The import data is expected as multipart content.",
         "operationId": "Post",
-        "consumes": ["multipart/form-data"],
+        "consumes": [
+          "multipart/form-data"
+        ],
         "produces": [
           "text/plain",
           "application/json",
@@ -44,9 +54,9 @@
         "parameters": [
           {
             "name": "ownerId",
-            "in": "query",
+            "in": "path",
             "description": "The owner identifier.",
-            "required": false,
+            "required": true,
             "type": "string"
           },
           {
@@ -54,40 +64,43 @@
             "in": "formData",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "ownerId",
-            "in": "path",
-            "description": "The owner identifier.",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
+            "schema": {
+              "$ref": "#/definitions/ImportStatusRespDto"
+            }
           },
           "400": {
             "description": "Bad Request",
-            "schema": { "$ref": "#/definitions/ActionResult" }
+            "schema": {
+              "$ref": "#/definitions/ImportStatusRespDto"
+            }
           },
           "403": {
             "description": "Forbidden",
-            "schema": { "$ref": "#/definitions/ActionResult" }
+            "schema": {
+              "$ref": "#/definitions/ActionResult"
+            }
           },
           "404": {
             "description": "Not Found",
-            "schema": { "$ref": "#/definitions/NotFoundResult" }
+            "schema": {
+              "$ref": "#/definitions/NotFoundResult"
+            }
           }
         }
       }
     },
     "/api/owners/{ownerId}/imports/{importId}/status": {
       "get": {
-        "tags": ["Import"],
+        "tags": [
+          "Import"
+        ],
         "summary": "Returns status information for the specified import identifier.",
-        "operationId": "Get",
+        "operationId": "GetStatus",
         "consumes": [],
         "produces": [
           "text/plain",
@@ -122,15 +135,21 @@
         "responses": {
           "200": {
             "description": "Success",
-            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
+            "schema": {
+              "$ref": "#/definitions/ImportStatusRespDto"
+            }
           },
           "403": {
             "description": "Forbidden",
-            "schema": { "$ref": "#/definitions/ActionResult" }
+            "schema": {
+              "$ref": "#/definitions/ActionResult"
+            }
           },
           "404": {
             "description": "Not Found",
-            "schema": { "$ref": "#/definitions/NotFoundResult" }
+            "schema": {
+              "$ref": "#/definitions/NotFoundResult"
+            }
           }
         }
       }
@@ -140,28 +159,48 @@
     "MetaInfoRespDto": {
       "type": "object",
       "properties": {
-        "supportsLocalAssets": { "type": "boolean" },
+        "supportsLocalAssets": {
+          "type": "boolean"
+        },
         "xsdValidationSupport": {
-          "enum": ["Synchronous", "Asynchronous"],
+          "enum": [
+            "Synchronous",
+            "Asynchronous"
+          ],
           "type": "string"
         },
         "uploadSupportedMimeTypes": {
           "uniqueItems": false,
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
-    "ActionResult": { "type": "object", "properties": {} },
+    "ActionResult": {
+      "type": "object",
+      "properties": {}
+    },
     "ImportStatusRespDto": {
       "type": "object",
       "properties": {
-        "importId": { "type": "string" },
-        "status": {
-          "enum": ["None", "Pending", "Processing", "Failed", "Completed"],
+        "importId": {
           "type": "string"
         },
-        "importStatistics": { "$ref": "#/definitions/ImportStatisticsRespDto" }
+        "status": {
+          "enum": [
+            "None",
+            "Pending",
+            "Processing",
+            "Failed",
+            "Completed"
+          ],
+          "type": "string"
+        },
+        "importStatistics": {
+          "$ref": "#/definitions/ImportStatisticsRespDto"
+        }
       }
     },
     "ImportStatisticsRespDto": {
@@ -175,42 +214,73 @@
           "format": "int32",
           "type": "integer"
         },
-        "totalAssetsImportedSuccess": { "format": "int32", "type": "integer" },
-        "totalAssetsImportedFailed": { "format": "int32", "type": "integer" },
+        "totalAssetsImportedSuccess": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "totalAssetsImportedFailed": {
+          "format": "int32",
+          "type": "integer"
+        },
         "processingMessages": {
           "uniqueItems": false,
           "type": "array",
-          "items": { "$ref": "#/definitions/ImportLogRespDto" }
+          "items": {
+            "$ref": "#/definitions/ImportLogRespDto"
+          }
         }
       }
     },
     "ImportLogRespDto": {
       "type": "object",
       "properties": {
-        "level": { "enum": ["Info", "Warn", "Error"], "type": "string" },
+        "level": {
+          "enum": [
+            "Info",
+            "Warn",
+            "Error"
+          ],
+          "type": "string"
+        },
         "errorCode": {
           "enum": [
             "None",
             "XmlSchemaValidationFailed",
+            "UnsupportedSwissRetsSchemaVersion",
             "ImportFileNotFound",
-            "FailedConcatenatingImportFiles",
+            "InvalidFileExtension",
             "AssetNotFound",
-            "OwnerNotFound"
+            "OwnerNotFound",
+            "UserNotAuthorized",
+            "ConcurrentImportFound",
+            "GeneralError"
           ],
           "type": "string"
         },
-        "objectId": { "type": "string" },
-        "objectType": {
-          "enum": ["Project", "Unit", "Property"],
+        "objectId": {
           "type": "string"
         },
-        "message": { "type": "string" }
+        "objectType": {
+          "enum": [
+            "Project",
+            "Unit",
+            "Property"
+          ],
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
       }
     },
     "NotFoundResult": {
       "type": "object",
       "properties": {
-        "statusCode": { "format": "int32", "type": "integer", "readOnly": true }
+        "statusCode": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        }
       }
     }
   }
