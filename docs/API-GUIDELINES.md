@@ -14,6 +14,8 @@
 
 * The support of local assets with file:// URIs (e.g. from an FTP-Server or by https upload with the import request) may, but must not be supported by the API. The `/api/meta` endpoint informs whether local assets are supported. Assets with http(s) URIs must be supported by the API.
 
+* The import endpoint must support the processing of compressed files. Supported compression formats are *.zip, *.gz, *.tgz.
+
 * Authentication happens via [OAuth 2.0 standard](https://oauth.net/2/) with the [resource owner password credentials grant type](https://tools.ietf.org/html/rfc6749#section-4.3). The authenticated user must be entitled to access the data of the given ownerId in the API request URL. The details of the mapping of the authenticated user and the ownerId is up to the platform.
 
 * The API may restrict the mime types of uploaded files (application/xml, application/gzip, application/zip, ...) and return `HTTP 415 Unsupported Media Type`. The `/api/meta` endpoint informs about the list of supported media types. 
