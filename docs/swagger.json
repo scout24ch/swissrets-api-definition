@@ -128,7 +128,7 @@
     "/api/owners/{ownerId}/imports/validate": {
       "get": {
         "tags": ["Import"],
-        "summary": "Returns status information for the specified import identifier.",
+        "summary": "Returns validation information for the uploaded SwissRETS file.",
         "operationId": "GetValidationResult",
         "consumes": [],
         "produces": [

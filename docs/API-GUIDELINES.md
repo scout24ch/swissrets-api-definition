@@ -16,6 +16,8 @@
 
 * The import endpoint must support the processing of compressed files. Supported compression formats are *.zip, *.gz, *.tgz.
 
+* The import endpoint expects a multipart/form-data request, even if only a single file is uploaded.
+
 * Authentication happens via [OAuth 2.0 standard](https://oauth.net/2/) with the [resource owner password credentials grant type](https://tools.ietf.org/html/rfc6749#section-4.3). The authenticated user must be entitled to access the data of the given ownerId in the API request URL. The details of the mapping of the authenticated user and the ownerId is up to the platform.
 
 * The API may restrict the mime types of uploaded files (application/xml, application/gzip, application/zip, ...) and return `HTTP 415 Unsupported Media Type`. The `/api/meta` endpoint informs about the list of supported media types. 
