@@ -24,7 +24,7 @@
 
 * Error codes returned by the API are standardized to ensure a cross platform consistency in behaviour. Custom error codes can be added by the platform if needed.
 
-* Data validation is performed by XSD validation against the [SwissRETS schema](https://github.com/qualipool/swissrets/blob/master/schema/schema.xsd). It is up to the platform to decide, if XSD validation should happen synchronously or asynchronously. The `/api/meta` endpoint informs about how the platform supports schema validation.
+* Data validation is performed by XSD validation against the [SwissRETS schema](https://github.com/qualipool/swissrets/blob/master/schema/schema.xsd). It is up to the platform to decide, if XSD validation should happen synchronously or asynchronously. 
 
 * Additional validation can happen on the platform. All validation errors should return an xpath expression pointing to the affected node in the XML document. 
 
@@ -34,7 +34,7 @@ A detailed swagger specification of the API can be found [here](/docs/swagger.js
 
 ### GET /api/meta
 
-> Returns meta information about the API, e.g. about supported or unsupported functionality.
+> Returns meta information about the API, e.g. about supported or unsupported functionality, system maintenance status, ...
 
 ### POST /api/owners/{ownerId}/imports
 
@@ -43,3 +43,7 @@ A detailed swagger specification of the API can be found [here](/docs/swagger.js
 ### GET /api/owners/{ownerId}/imports/{importId}
 
 > Returns status information about the specified import.
+
+### GET /api/owners/{ownerId}/imports/validate
+
+> Returns validation information about the uploaded SwissRETS document. The document may contain only a single property. The validation result is returned synchronously.
