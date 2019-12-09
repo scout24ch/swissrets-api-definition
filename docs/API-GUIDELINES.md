@@ -41,6 +41,10 @@ A detailed swagger specification of the API can be found [here](/docs/swagger.js
 
 > Returns meta information about the API, e.g. about supported or unsupported functionality, system maintenance status, ...
 
+### POST /api/users/{userId}/authorize
+
+> Authenticates the given user with username and password. Returns an accesstoken which must be transmitted with all requests againts protected resources.
+
 ### POST /api/owners/{ownerId}/imports
 
 > Schededules an import for the given owner and returns an import identifier, which can be used to poll the status of the import.
@@ -49,6 +53,6 @@ A detailed swagger specification of the API can be found [here](/docs/swagger.js
 
 > Returns status information about the specified import.
 
-### GET /api/owners/{ownerId}/imports/validate
+### POST /api/owners/{ownerId}/imports/validate
 
 > Returns validation information about the uploaded SwissRETS document. The document may contain only a single property. The validation result is returned synchronously.
