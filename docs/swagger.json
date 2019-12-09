@@ -83,7 +83,7 @@
                "400":{
                   "description":"Bad Request",
                   "schema":{
-                     "$ref":"#/definitions/ImportStatusRespDto"
+                     "$ref":"#/definitions/ActionResult"
                   }
                },
                "403":{
@@ -144,7 +144,7 @@
                "400":{
                   "description":"Bad Request",
                   "schema":{
-                     "$ref":"#/definitions/ImportStatusRespDto"
+                     "$ref":"#/definitions/ActionResult"
                   }
                },
                "403":{
@@ -198,7 +198,7 @@
                "400":{
                   "description":"Bad Request",
                   "schema":{
-                     "$ref":"#/definitions/ValidationResultRespDto"
+                     "$ref":"#/definitions/ActionResult"
                   }
                },
                "403":{
