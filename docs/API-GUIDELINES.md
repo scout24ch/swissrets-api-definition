@@ -28,7 +28,7 @@
 
 * Data validation is performed by XSD validation against the [SwissRETS schema](https://github.com/qualipool/swissrets/blob/master/schema/schema.xsd). It is up to the platform to decide, if XSD validation should happen synchronously or asynchronously. 
 
-* Additional validation can happen on the platform. All validation errors should return an xpath expression pointing to the affected node in the XML document. 
+* Additional validation can happen on the platform. 
 
 ## Endpoints
 
