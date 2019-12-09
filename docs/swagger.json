@@ -1,267 +1,415 @@
 {
-  "swagger": "2.0",
-  "info": { "version": "v1", "title": "SwissRETS API" },
-  "paths": {
-    "/api/meta": {
-      "get": {
-        "tags": ["Import"],
-        "summary": "Returns metadata about supported functionality of this endpoint.",
-        "operationId": "GetMeta",
-        "consumes": [],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json",
-          "application/xml",
-          "text/xml"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": { "$ref": "#/definitions/MetaInfoRespDto" }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": { "$ref": "#/definitions/ActionResult" }
-          }
-        }
+   "swagger":"2.0",
+   "info":{
+      "version":"v1",
+      "title":"SwissRETS API"
+   },
+   "paths":{
+      "/api/meta":{
+         "get":{
+            "tags":[
+               "Import"
+            ],
+            "summary":"Returns metadata about supported functionality of this endpoint.",
+            "operationId":"GetMeta",
+            "consumes":[
+
+            ],
+            "produces":[
+               "text/plain",
+               "application/json",
+               "text/json",
+               "application/xml",
+               "text/xml"
+            ],
+            "parameters":[
+
+            ],
+            "responses":{
+               "200":{
+                  "description":"Success",
+                  "schema":{
+                     "$ref":"#/definitions/MetaInfoRespDto"
+                  }
+               },
+               "403":{
+                  "description":"Forbidden",
+                  "schema":{
+                     "$ref":"#/definitions/ActionResult"
+                  }
+               }
+            }
+         }
+      },
+      "/api/owners/{ownerId}/imports":{
+         "post":{
+            "tags":[
+               "Import"
+            ],
+            "summary":"Initiates an import and returns a new import identifier. The import data is expected as multipart content.",
+            "operationId":"Post",
+            "consumes":[
+               "multipart/form-data"
+            ],
+            "produces":[
+               "text/plain",
+               "application/json",
+               "text/json",
+               "application/xml",
+               "text/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"ownerId",
+                  "in":"path",
+                  "description":"The owner identifier.",
+                  "required":true,
+                  "type":"string"
+               },
+               {
+                  "name":"StatusChangeCallbackUri",
+                  "in":"formData",
+                  "required":false,
+                  "type":"string"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Success",
+                  "schema":{
+                     "$ref":"#/definitions/ImportStatusRespDto"
+                  }
+               },
+               "400":{
+                  "description":"Bad Request",
+                  "schema":{
+                     "$ref":"#/definitions/ImportStatusRespDto"
+                  }
+               },
+               "403":{
+                  "description":"Forbidden",
+                  "schema":{
+                     "$ref":"#/definitions/ActionResult"
+                  }
+               },
+               "404":{
+                  "description":"Not Found",
+                  "schema":{
+                     "$ref":"#/definitions/NotFoundResult"
+                  }
+               }
+            }
+         }
+      },
+      "/api/owners/{ownerId}/imports/{importId}/status":{
+         "get":{
+            "tags":[
+               "Import"
+            ],
+            "summary":"Returns status information for the specified import identifier.",
+            "operationId":"GetStatus",
+            "consumes":[
+
+            ],
+            "produces":[
+               "text/plain",
+               "application/json",
+               "text/json",
+               "application/xml",
+               "text/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"ownerId",
+                  "in":"path",
+                  "description":"The owner identifier.",
+                  "required":true,
+                  "type":"string"
+               },
+               {
+                  "name":"importId",
+                  "in":"path",
+                  "description":"The import identifier.",
+                  "required":true,
+                  "type":"string"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Success",
+                  "schema":{
+                     "$ref":"#/definitions/ImportStatusRespDto"
+                  }
+               },
+               "400":{
+                  "description":"Bad Request",
+                  "schema":{
+                     "$ref":"#/definitions/ImportStatusRespDto"
+                  }
+               },
+               "403":{
+                  "description":"Forbidden",
+                  "schema":{
+                     "$ref":"#/definitions/ActionResult"
+                  }
+               },
+               "404":{
+                  "description":"Not Found",
+                  "schema":{
+                     "$ref":"#/definitions/NotFoundResult"
+                  }
+               }
+            }
+         }
+      },
+      "/api/owners/{ownerId}/imports/validate":{
+         "get":{
+            "tags":[
+               "Import"
+            ],
+            "summary":"Returns validation information for the uploaded SwissRETS file.",
+            "operationId":"GetValidationResult",
+            "consumes":[
+
+            ],
+            "produces":[
+               "text/plain",
+               "application/json",
+               "text/json",
+               "application/xml",
+               "text/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"ownerId",
+                  "in":"path",
+                  "description":"The owner identifier.",
+                  "required":true,
+                  "type":"string"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Success",
+                  "schema":{
+                     "$ref":"#/definitions/ValidationResultRespDto"
+                  }
+               },
+               "400":{
+                  "description":"Bad Request",
+                  "schema":{
+                     "$ref":"#/definitions/ValidationResultRespDto"
+                  }
+               },
+               "403":{
+                  "description":"Forbidden",
+                  "schema":{
+                     "$ref":"#/definitions/ActionResult"
+                  }
+               }
+            }
+         }
+      },
+      "/api/exports/{configurationId}":{
+         "post":{
+            "tags":[
+               "Import"
+            ],
+            "summary":"Triggers an export.\r\nThis endpoint only exists temporarily for testing purposes.\r\nThe export should be triggered through a hangfire task.",
+            "operationId":"Export",
+            "consumes":[
+
+            ],
+            "produces":[
+               "text/plain",
+               "application/json",
+               "text/json",
+               "application/xml",
+               "text/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"configurationId",
+                  "in":"path",
+                  "description":"Id of the export configuration for which to create an expor.",
+                  "required":true,
+                  "type":"integer",
+                  "format":"int64"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Success",
+                  "schema":{
+                     "$ref":"#/definitions/ExportRespDto"
+                  }
+               }
+            }
+         }
       }
-    },
-    "/api/owners/{ownerId}/imports": {
-      "post": {
-        "tags": ["Import"],
-        "summary": "Initiates an import and returns a new import identifier. The import data is expected as multipart content.",
-        "operationId": "Post",
-        "consumes": ["multipart/form-data"],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json",
-          "application/xml",
-          "text/xml"
-        ],
-        "parameters": [
-          {
-            "name": "ownerId",
-            "in": "path",
-            "description": "The owner identifier.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "StatusChangeCallbackUri",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": { "$ref": "#/definitions/ActionResult" }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": { "$ref": "#/definitions/NotFoundResult" }
-          }
-        }
+   },
+   "definitions":{
+      "MetaInfoRespDto":{
+         "type":"object",
+         "properties":{
+            "acceptsSwissRetsMajorVersions":{
+               "uniqueItems":false,
+               "type":"array",
+               "items":{
+                  "format":"int32",
+                  "type":"integer"
+               }
+            },
+            "isInMaintenanceMode":{
+               "type":"boolean"
+            },
+            "supportsLocalAssets":{
+               "type":"boolean"
+            },
+            "uploadSupportedMimeTypes":{
+               "uniqueItems":false,
+               "type":"array",
+               "items":{
+                  "type":"string"
+               }
+            }
+         }
+      },
+      "ActionResult":{
+         "type":"object",
+         "properties":{
+
+         }
+      },
+      "ImportStatusRespDto":{
+         "type":"object",
+         "properties":{
+            "importId":{
+               "type":"string"
+            },
+            "status":{
+               "enum":[
+                  "None",
+                  "Processing",
+                  "Failed",
+                  "Completed"
+               ],
+               "type":"string"
+            },
+            "importStatistics":{
+               "$ref":"#/definitions/ImportStatisticsRespDto"
+            }
+         }
+      },
+      "ImportStatisticsRespDto":{
+         "type":"object",
+         "properties":{
+            "totalPropertiesImportedSuccess":{
+               "format":"int32",
+               "type":"integer"
+            },
+            "totalPropertiesImportedFailed":{
+               "format":"int32",
+               "type":"integer"
+            },
+            "totalAssetsImportedSuccess":{
+               "format":"int32",
+               "type":"integer"
+            },
+            "totalAssetsImportedFailed":{
+               "format":"int32",
+               "type":"integer"
+            },
+            "processingMessages":{
+               "uniqueItems":false,
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/LogRespDto"
+               }
+            }
+         }
+      },
+      "LogRespDto":{
+         "type":"object",
+         "properties":{
+            "level":{
+               "enum":[
+                  "Info",
+                  "Warn",
+                  "Error"
+               ],
+               "type":"string"
+            },
+            "errorCode":{
+               "enum":[
+                  "None",
+                  "XmlSchemaValidationFailed",
+                  "UnsupportedSwissRetsSchemaVersion",
+                  "ImportFileNotFound",
+                  "InvalidFileExtension",
+                  "AssetNotFound",
+                  "OwnerNotFound",
+                  "ImportsNotSupported",
+                  "UserNotAuthorized",
+                  "ConcurrentImportFound",
+                  "AttachmentImportFailed",
+                  "PropertyHasNoAddress",
+                  "NotEnoughImages",
+                  "GeneralError"
+               ],
+               "type":"string"
+            },
+            "objectRefId":{
+               "type":"string"
+            },
+            "objectType":{
+               "enum":[
+                  "Project",
+                  "Unit",
+                  "Property"
+               ],
+               "type":"string"
+            },
+            "message":{
+               "type":"string"
+            },
+            "isPersisted":{
+               "type":"boolean"
+            }
+         }
+      },
+      "NotFoundResult":{
+         "type":"object",
+         "properties":{
+            "statusCode":{
+               "format":"int32",
+               "type":"integer",
+               "readOnly":true
+            }
+         }
+      },
+      "ValidationResultRespDto":{
+         "type":"object",
+         "properties":{
+            "isValid":{
+               "type":"boolean"
+            },
+            "validationMessages":{
+               "uniqueItems":false,
+               "type":"array",
+               "items":{
+                  "$ref":"#/definitions/LogRespDto"
+               }
+            }
+         }
+      },
+      "ExportRespDto":{
+         "type":"object",
+         "properties":{
+            "exportIdentifier":{
+               "type":"string"
+            }
+         }
       }
-    },
-    "/api/owners/{ownerId}/imports/{importId}/status": {
-      "get": {
-        "tags": ["Import"],
-        "summary": "Returns status information for the specified import identifier.",
-        "operationId": "GetStatus",
-        "consumes": [],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json",
-          "application/xml",
-          "text/xml"
-        ],
-        "parameters": [
-          {
-            "name": "ownerId",
-            "in": "path",
-            "description": "The owner identifier.",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "importId",
-            "in": "path",
-            "description": "The import identifier.",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": { "$ref": "#/definitions/ImportStatusRespDto" }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": { "$ref": "#/definitions/ActionResult" }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": { "$ref": "#/definitions/NotFoundResult" }
-          }
-        }
-      }
-    },
-    "/api/owners/{ownerId}/imports/validate": {
-      "get": {
-        "tags": ["Import"],
-        "summary": "Returns validation information for the uploaded SwissRETS file.",
-        "operationId": "GetValidationResult",
-        "consumes": [],
-        "produces": [
-          "text/plain",
-          "application/json",
-          "text/json",
-          "application/xml",
-          "text/xml"
-        ],
-        "parameters": [
-          {
-            "name": "ownerId",
-            "in": "path",
-            "description": "The owner identifier.",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": { "$ref": "#/definitions/ValidationResultRespDto" }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": { "$ref": "#/definitions/ValidationResultRespDto" }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": { "$ref": "#/definitions/ActionResult" }
-          }
-        }
-      }
-    }
-  },
-  "definitions": {
-    "MetaInfoRespDto": {
-      "type": "object",
-      "properties": {
-        "acceptsSwissRetsMajorVersions": {
-          "uniqueItems": false,
-          "type": "array",
-          "items": { "format": "int32", "type": "integer" }
-        },
-        "isInMaintenanceMode": { "type": "boolean" },
-        "supportsLocalAssets": { "type": "boolean" },
-        "uploadSupportedMimeTypes": {
-          "uniqueItems": false,
-          "type": "array",
-          "items": { "type": "string" }
-        }
-      }
-    },
-    "ActionResult": { "type": "object", "properties": {} },
-    "ImportStatusRespDto": {
-      "type": "object",
-      "properties": {
-        "importId": { "type": "string" },
-        "status": {
-          "enum": ["None", "Processing", "Failed", "Completed"],
-          "type": "string"
-        },
-        "importStatistics": { "$ref": "#/definitions/ImportStatisticsRespDto" }
-      }
-    },
-    "ImportStatisticsRespDto": {
-      "type": "object",
-      "properties": {
-        "totalPropertiesImportedSuccess": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "totalPropertiesImportedFailed": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "totalAssetsImportedSuccess": { "format": "int32", "type": "integer" },
-        "totalAssetsImportedFailed": { "format": "int32", "type": "integer" },
-        "processingMessages": {
-          "uniqueItems": false,
-          "type": "array",
-          "items": { "$ref": "#/definitions/LogRespDto" }
-        }
-      }
-    },
-    "LogRespDto": {
-      "type": "object",
-      "properties": {
-        "level": { "enum": ["Info", "Warn", "Error"], "type": "string" },
-        "errorCode": {
-          "enum": [
-            "None",
-            "XmlSchemaValidationFailed",
-            "UnsupportedSwissRetsSchemaVersion",
-            "ImportFileNotFound",
-            "InvalidFileExtension",
-            "AssetNotFound",
-            "OwnerNotFound",
-            "ImportsNotSupported",
-            "UserNotAuthorized",
-            "ConcurrentImportFound",
-            "AttachmentImportFailed",
-            "PropertyHasNoAddress",
-            "NotEnoughImages",
-            "GeneralError"
-          ],
-          "type": "string"
-        },
-        "objectRefId": { "type": "string" },
-        "objectType": {
-          "enum": ["Project", "Unit", "Property"],
-          "type": "string"
-        },
-        "message": { "type": "string" },
-        "isPersisted": { "type": "boolean" }
-      }
-    },
-    "NotFoundResult": {
-      "type": "object",
-      "properties": {
-        "statusCode": { "format": "int32", "type": "integer", "readOnly": true }
-      }
-    },
-    "ValidationResultRespDto": {
-      "type": "object",
-      "properties": {
-        "isValid": { "type": "boolean" },
-        "validationMessages": {
-          "uniqueItems": false,
-          "type": "array",
-          "items": { "$ref": "#/definitions/LogRespDto" }
-        }
-      }
-    }
-  }
+   }
 }
