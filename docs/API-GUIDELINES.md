@@ -38,7 +38,7 @@ A detailed swagger specification of the API can be found [here](/docs/swagger.js
 
 > Returns meta information about the API, e.g. about supported or unsupported functionality, system maintenance status, ...
 
-### POST /api/users/{userName}/authorize
+### POST /api/users/authorize
 
 > Authenticates the given user with username and password. Returns an accesstoken which must be transmitted with all requests againts protected resources.
 
