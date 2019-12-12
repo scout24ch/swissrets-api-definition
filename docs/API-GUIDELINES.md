@@ -12,7 +12,7 @@
 
 * The import processing is asynchronous. The state of the import can be polled by the `/api/owners/{ownerId}/imports/{importId}` endpoint.
 
-* The support of local assets with file:// URIs (e.g. from an FTP-Server or by https upload with the import request) may, but must not be supported by the API. The `/api/meta` endpoint informs whether local assets are supported. Assets with http(s) URIs must be supported by the API.
+* The support of local assets with `file://` URIs (e.g. from an FTP-Server or by https upload with the import request) may, but must not be supported by the API. The `/api/meta` endpoint informs whether local assets are supported. Assets with http(s) URIs must be supported by the API.
 
 * The import endpoint must support the processing of compressed files. Supported compression formats are *.zip, *.gz, *.tgz.
 
