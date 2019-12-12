@@ -18,7 +18,7 @@
 
 * The import endpoint expects a multipart/form-data request, even if only a single file is uploaded.
 
-* Authentication and authorization happens against the `POST /api/users/{userId}/authorize` endpoint. The endpoint receives the API user's credentials and supplies an accesstoken which must be provided with an authentication bearer header with all protected resources.
+* Authentication and authorization happens against the `POST /api/users/{userId}/authorize` endpoint. The endpoint receives the API user's credentials and supplies an accesstoken which must be provided for bearer authentication with all protected resources.
 
 * The API may restrict the mime types of uploaded files (application/xml, application/gzip, application/zip, ...) and return `HTTP 415 Unsupported Media Type`. The `/api/meta` endpoint informs about the list of supported media types. 
 
@@ -40,7 +40,7 @@ A detailed swagger specification of the API can be found [here](/docs/swagger.js
 
 ### POST /api/users/authorize
 
-> Authenticates the given user with username and password. Returns an accesstoken which must be transmitted with all requests againts protected resources.
+> Authenticates the given user with username and password. Returns an accesstoken which must be provided for bearer authentication with all protected resources. 
 
 ### POST /api/owners/{ownerId}/imports
 
