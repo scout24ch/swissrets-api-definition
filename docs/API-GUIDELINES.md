@@ -18,7 +18,7 @@
 
 * The import endpoint expects a multipart/form-data request, even if only a single file is uploaded.
 
-* Authentication and authorization happens against the `POST /api/users/{userId}/authorize` endpoint. 
+* Authentication and authorization happens against the `POST /api/users/{userId}/authorize` endpoint. The endpoint receives the API user's credentials and supplies an accesstoken which must be provided with an authentication bearer header with all protected resources.
 
 * The API may restrict the mime types of uploaded files (application/xml, application/gzip, application/zip, ...) and return `HTTP 415 Unsupported Media Type`. The `/api/meta` endpoint informs about the list of supported media types. 
 
