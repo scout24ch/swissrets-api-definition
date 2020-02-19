@@ -31,12 +31,6 @@
                   "schema":{
                      "$ref":"#/definitions/MetaInfoRespDto"
                   }
-               },
-               "403":{
-                  "description":"Forbidden",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
                }
             }
          }
@@ -47,7 +41,7 @@
                "Import"
             ],
             "summary":"Initiates an import and returns a new import identifier. The import data is expected as multipart content.",
-            "operationId":"Post",
+            "operationId":"PostAsync",
             "consumes":[
                "multipart/form-data"
             ],
@@ -101,13 +95,13 @@
             }
          }
       },
-      "/api/owners/{ownerId}/imports/{importId}/status":{
+      "/api/owners/{ownerId}/imports/{importIdentifier}/status":{
          "get":{
             "tags":[
                "Import"
             ],
             "summary":"Returns status information for the specified import identifier.",
-            "operationId":"GetStatus",
+            "operationId":"GetStatusAsync",
             "consumes":[
 
             ],
@@ -127,7 +121,7 @@
                   "type":"string"
                },
                {
-                  "name":"importId",
+                  "name":"importIdentifier",
                   "in":"path",
                   "description":"The import identifier.",
                   "required":true,
@@ -168,7 +162,7 @@
                "Import"
             ],
             "summary":"Returns validation information for the uploaded SwissRETS file.",
-            "operationId":"GetValidationResult",
+            "operationId":"GetValidationResultAsync",
             "consumes":[
 
             ],
@@ -210,13 +204,13 @@
             }
          }
       },
-      "/api/exports/{configurationId}":{
-         "post":{
+      "/api/userinfo":{
+         "get":{
             "tags":[
                "Import"
             ],
-            "summary":"Triggers an export.\r\nThis endpoint only exists temporarily for testing purposes.\r\nThe export should be triggered through a hangfire task.",
-            "operationId":"Export",
+            "summary":"A protected endpoint for authentication testing purposes. Returns information about the currently authenticated user.",
+            "operationId":"Protected",
             "consumes":[
 
             ],
@@ -228,20 +222,67 @@
                "text/xml"
             ],
             "parameters":[
+
+            ],
+            "responses":{
+               "200":{
+                  "description":"Success",
+                  "schema":{
+                     "$ref":"#/definitions/UserInfoDto"
+                  }
+               }
+            }
+         }
+      },
+      "/api/users/authorize":{
+         "post":{
+            "tags":[
+               "Import"
+            ],
+            "operationId":"AuthorizeAsync",
+            "consumes":[
+               "application/json-patch+json",
+               "application/json",
+               "text/json",
+               "application/*+json",
+               "application/xml",
+               "text/xml",
+               "application/*+xml"
+            ],
+            "produces":[
+               "text/plain",
+               "application/json",
+               "text/json",
+               "application/xml",
+               "text/xml"
+            ],
+            "parameters":[
                {
-                  "name":"configurationId",
-                  "in":"path",
-                  "description":"Id of the export configuration for which to create an expor.",
-                  "required":true,
-                  "type":"integer",
-                  "format":"int64"
+                  "name":"requestDto",
+                  "in":"body",
+                  "required":false,
+                  "schema":{
+                     "$ref":"#/definitions/AuthorizationReqDto"
+                  }
                }
             ],
             "responses":{
                "200":{
                   "description":"Success",
                   "schema":{
-                     "$ref":"#/definitions/ExportRespDto"
+                     "$ref":"#/definitions/AuthorizationRespDto"
+                  }
+               },
+               "401":{
+                  "description":"Unauthorized",
+                  "schema":{
+                     "$ref":"#/definitions/IActionResult"
+                  }
+               },
+               "400":{
+                  "description":"Bad Request",
+                  "schema":{
+                     "$ref":"#/definitions/IActionResult"
                   }
                }
             }
@@ -273,12 +314,6 @@
                   "type":"string"
                }
             }
-         }
-      },
-      "ActionResult":{
-         "type":"object",
-         "properties":{
-
          }
       },
       "ImportStatusRespDto":{
@@ -349,7 +384,6 @@
                   "InvalidFileExtension",
                   "AssetNotFound",
                   "OwnerNotFound",
-                  "ImportsNotSupported",
                   "UserNotAuthorized",
                   "ConcurrentImportFound",
                   "AttachmentImportFailed",
@@ -372,10 +406,13 @@
             },
             "message":{
                "type":"string"
-            },
-            "isPersisted":{
-               "type":"boolean"
             }
+         }
+      },
+      "ActionResult":{
+         "type":"object",
+         "properties":{
+
          }
       },
       "NotFoundResult":{
@@ -403,13 +440,73 @@
             }
          }
       },
-      "ExportRespDto":{
+      "UserInfoDto":{
          "type":"object",
          "properties":{
-            "exportIdentifier":{
+            "name":{
+               "type":"string"
+            },
+            "id":{
+               "format":"int64",
+               "type":"integer"
+            }
+         }
+      },
+      "AuthorizationReqDto":{
+         "type":"object",
+         "properties":{
+            "clientId":{
+               "type":"string"
+            },
+            "clientSecret":{
+               "type":"string"
+            },
+            "userName":{
+               "type":"string"
+            },
+            "password":{
                "type":"string"
             }
          }
+      },
+      "AuthorizationRespDto":{
+         "type":"object",
+         "properties":{
+            "accessToken":{
+               "type":"string"
+            },
+            "expiresInSecs":{
+               "format":"int32",
+               "type":"integer"
+            },
+            "isError":{
+               "type":"boolean"
+            },
+            "errorDescription":{
+               "type":"string"
+            }
+         }
+      },
+      "IActionResult":{
+         "type":"object",
+         "properties":{
+
+         }
       }
-   }
+   },
+   "securityDefinitions":{
+      "Bearer":{
+         "name":"Authorization",
+         "in":"header",
+         "type":"apiKey",
+         "description":"Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\""
+      }
+   },
+   "security":[
+      {
+         "Bearer":[
+
+         ]
+      }
+   ]
 }
