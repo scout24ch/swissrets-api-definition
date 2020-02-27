@@ -91,6 +91,12 @@
                   "schema":{
                      "$ref":"#/definitions/NotFoundResult"
                   }
+               },
+               "503":{
+                  "description":"Server Error",
+                  "schema":{
+                     "$ref":"#/definitions/ActionResult"
+                  }
                }
             }
          }
@@ -157,7 +163,7 @@
          }
       },
       "/api/owners/{ownerId}/imports/validate":{
-         "get":{
+         "post":{
             "tags":[
                "Import"
             ],
@@ -197,6 +203,12 @@
                },
                "403":{
                   "description":"Forbidden",
+                  "schema":{
+                     "$ref":"#/definitions/ActionResult"
+                  }
+               },
+               "503":{
+                  "description":"Server Error",
                   "schema":{
                      "$ref":"#/definitions/ActionResult"
                   }
