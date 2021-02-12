@@ -1,524 +1,910 @@
+
 {
-   "swagger":"2.0",
-   "info":{
-      "version":"v1",
-      "title":"SwissRETS API"
-   },
-   "paths":{
-      "/api/meta":{
-         "get":{
-            "tags":[
-               "Import"
-            ],
-            "summary":"Returns metadata about supported functionality of this endpoint.",
-            "operationId":"GetMeta",
-            "consumes":[
-
-            ],
-            "produces":[
-               "text/plain",
-               "application/json",
-               "text/json",
-               "application/xml",
-               "text/xml"
-            ],
-            "parameters":[
-
-            ],
-            "responses":{
-               "200":{
-                  "description":"Success",
-                  "schema":{
-                     "$ref":"#/definitions/MetaInfoRespDto"
-                  }
-               }
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SwissRETS API",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/meta": {
+      "get": {
+        "tags": [
+          "Import"
+        ],
+        "summary": "Returns metadata about supported functionality of this endpoint.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaInfoRespDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaInfoRespDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaInfoRespDto"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaInfoRespDto"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaInfoRespDto"
+                }
+              }
             }
-         }
-      },
-      "/api/owners/{ownerId}/imports":{
-         "post":{
-            "tags":[
-               "Import"
-            ],
-            "summary":"Initiates an import and returns a new import identifier. The import data is expected as multipart content.",
-            "operationId":"PostAsync",
-            "consumes":[
-               "multipart/form-data"
-            ],
-            "produces":[
-               "text/plain",
-               "application/json",
-               "text/json",
-               "application/xml",
-               "text/xml"
-            ],
-            "parameters":[
-               {
-                  "name":"ownerId",
-                  "in":"path",
-                  "description":"The owner identifier.",
-                  "required":true,
-                  "type":"string"
-               },
-               {
-                  "name":"StatusChangeCallbackUri",
-                  "in":"formData",
-                  "required":false,
-                  "type":"string"
-               }
-            ],
-            "responses":{
-               "200":{
-                  "description":"Success",
-                  "schema":{
-                     "$ref":"#/definitions/ImportStatusRespDto"
-                  }
-               },
-               "400":{
-                  "description":"Bad Request",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               },
-               "403":{
-                  "description":"Forbidden",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               },
-               "404":{
-                  "description":"Not Found",
-                  "schema":{
-                     "$ref":"#/definitions/NotFoundResult"
-                  }
-               },
-               "503":{
-                  "description":"Server Error",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               }
-            }
-         }
-      },
-      "/api/owners/{ownerId}/imports/{importIdentifier}/status":{
-         "get":{
-            "tags":[
-               "Import"
-            ],
-            "summary":"Returns status information for the specified import identifier.",
-            "operationId":"GetStatusAsync",
-            "consumes":[
-
-            ],
-            "produces":[
-               "text/plain",
-               "application/json",
-               "text/json",
-               "application/xml",
-               "text/xml"
-            ],
-            "parameters":[
-               {
-                  "name":"ownerId",
-                  "in":"path",
-                  "description":"The owner identifier.",
-                  "required":true,
-                  "type":"string"
-               },
-               {
-                  "name":"importIdentifier",
-                  "in":"path",
-                  "description":"The import identifier.",
-                  "required":true,
-                  "type":"string"
-               }
-            ],
-            "responses":{
-               "200":{
-                  "description":"Success",
-                  "schema":{
-                     "$ref":"#/definitions/ImportStatusRespDto"
-                  }
-               },
-               "400":{
-                  "description":"Bad Request",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               },
-               "403":{
-                  "description":"Forbidden",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               },
-               "404":{
-                  "description":"Not Found",
-                  "schema":{
-                     "$ref":"#/definitions/NotFoundResult"
-                  }
-               }
-            }
-         }
-      },
-      "/api/owners/{ownerId}/imports/validate":{
-         "post":{
-            "tags":[
-               "Import"
-            ],
-            "summary":"Returns validation information for the uploaded SwissRETS file.",
-            "operationId":"GetValidationResultAsync",
-            "consumes":[
-
-            ],
-            "produces":[
-               "text/plain",
-               "application/json",
-               "text/json",
-               "application/xml",
-               "text/xml"
-            ],
-            "parameters":[
-               {
-                  "name":"ownerId",
-                  "in":"path",
-                  "description":"The owner identifier.",
-                  "required":true,
-                  "type":"string"
-               }
-            ],
-            "responses":{
-               "200":{
-                  "description":"Success",
-                  "schema":{
-                     "$ref":"#/definitions/ValidationResultRespDto"
-                  }
-               },
-               "400":{
-                  "description":"Bad Request",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               },
-               "403":{
-                  "description":"Forbidden",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               },
-               "503":{
-                  "description":"Server Error",
-                  "schema":{
-                     "$ref":"#/definitions/ActionResult"
-                  }
-               }
-            }
-         }
-      },
-      "/api/userinfo":{
-         "get":{
-            "tags":[
-               "Import"
-            ],
-            "summary":"A protected endpoint for authentication testing purposes. Returns information about the currently authenticated user.",
-            "operationId":"Protected",
-            "consumes":[
-
-            ],
-            "produces":[
-               "text/plain",
-               "application/json",
-               "text/json",
-               "application/xml",
-               "text/xml"
-            ],
-            "parameters":[
-
-            ],
-            "responses":{
-               "200":{
-                  "description":"Success",
-                  "schema":{
-                     "$ref":"#/definitions/UserInfoDto"
-                  }
-               }
-            }
-         }
-      },
-      "/api/users/authorize":{
-         "post":{
-            "tags":[
-               "Import"
-            ],
-            "operationId":"AuthorizeAsync",
-            "consumes":[
-               "application/json-patch+json",
-               "application/json",
-               "text/json",
-               "application/*+json",
-               "application/xml",
-               "text/xml",
-               "application/*+xml"
-            ],
-            "produces":[
-               "text/plain",
-               "application/json",
-               "text/json",
-               "application/xml",
-               "text/xml"
-            ],
-            "parameters":[
-               {
-                  "name":"requestDto",
-                  "in":"body",
-                  "required":false,
-                  "schema":{
-                     "$ref":"#/definitions/AuthorizationReqDto"
-                  }
-               }
-            ],
-            "responses":{
-               "200":{
-                  "description":"Success",
-                  "schema":{
-                     "$ref":"#/definitions/AuthorizationRespDto"
-                  }
-               },
-               "401":{
-                  "description":"Unauthorized",
-                  "schema":{
-                     "$ref":"#/definitions/IActionResult"
-                  }
-               },
-               "400":{
-                  "description":"Bad Request",
-                  "schema":{
-                     "$ref":"#/definitions/IActionResult"
-                  }
-               }
-            }
-         }
+          }
+        }
       }
-   },
-   "definitions":{
-      "MetaInfoRespDto":{
-         "type":"object",
-         "properties":{
-            "acceptsSwissRetsMajorVersions":{
-               "uniqueItems":false,
-               "type":"array",
-               "items":{
-                  "format":"int32",
-                  "type":"integer"
-               }
-            },
-            "isInMaintenanceMode":{
-               "type":"boolean"
-            },
-            "supportsLocalAssets":{
-               "type":"boolean"
-            },
-            "uploadSupportedMimeTypes":{
-               "uniqueItems":false,
-               "type":"array",
-               "items":{
-                  "type":"string"
-               }
+    },
+    "/api/owners/{ownerId}/imports": {
+      "post": {
+        "tags": [
+          "Import"
+        ],
+        "summary": "Initiates an import and returns a new import identifier. The import data is expected as multipart content.",
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "The owner identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The owner identifier.",
+              "nullable": true
             }
-         }
-      },
-      "ImportStatusRespDto":{
-         "type":"object",
-         "properties":{
-            "importId":{
-               "type":"string"
-            },
-            "status":{
-               "enum":[
-                  "None",
-                  "Processing",
-                  "Failed",
-                  "Completed"
-               ],
-               "type":"string"
-            },
-            "importStatistics":{
-               "$ref":"#/definitions/ImportStatisticsRespDto"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "StatusChangeCallbackUri": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              },
+              "encoding": {
+                "StatusChangeCallbackUri": {
+                  "style": "form"
+                }
+              }
             }
-         }
-      },
-      "ImportStatisticsRespDto":{
-         "type":"object",
-         "properties":{
-            "totalPropertiesImportedSuccess":{
-               "format":"int32",
-               "type":"integer"
-            },
-            "totalPropertiesImportedFailed":{
-               "format":"int32",
-               "type":"integer"
-            },
-            "totalAssetsImportedSuccess":{
-               "format":"int32",
-               "type":"integer"
-            },
-            "totalAssetsImportedFailed":{
-               "format":"int32",
-               "type":"integer"
-            },
-            "processingMessages":{
-               "uniqueItems":false,
-               "type":"array",
-               "items":{
-                  "$ref":"#/definitions/LogRespDto"
-               }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportStatusRespDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportStatusRespDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportStatusRespDto"
+                }
+              }
             }
-         }
-      },
-      "LogRespDto":{
-         "type":"object",
-         "properties":{
-            "level":{
-               "enum":[
-                  "Info",
-                  "Warn",
-                  "Error"
-               ],
-               "type":"string"
-            },
-            "errorCode":{
-               "enum":[
-                  "None",
-                  "XmlSchemaValidationFailed",
-                  "UnsupportedSwissRetsSchemaVersion",
-                  "ImportFileNotFound",
-                  "InvalidFileExtension",
-                  "AssetNotFound",
-                  "OwnerNotFound",
-                  "UserNotAuthorized",
-                  "ConcurrentImportFound",
-                  "AttachmentImportFailed",
-                  "PropertyHasNoAddress",
-                  "NotEnoughImages",
-                  "GeneralError"
-               ],
-               "type":"string"
-            },
-            "objectRefId":{
-               "type":"string"
-            },
-            "objectType":{
-               "enum":[
-                  "Project",
-                  "Unit",
-                  "Property"
-               ],
-               "type":"string"
-            },
-            "message":{
-               "type":"string"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
             }
-         }
-      },
-      "ActionResult":{
-         "type":"object",
-         "properties":{
-
-         }
-      },
-      "NotFoundResult":{
-         "type":"object",
-         "properties":{
-            "statusCode":{
-               "format":"int32",
-               "type":"integer",
-               "readOnly":true
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
             }
-         }
-      },
-      "ValidationResultRespDto":{
-         "type":"object",
-         "properties":{
-            "isValid":{
-               "type":"boolean"
-            },
-            "validationMessages":{
-               "uniqueItems":false,
-               "type":"array",
-               "items":{
-                  "$ref":"#/definitions/LogRespDto"
-               }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              }
             }
-         }
-      },
-      "UserInfoDto":{
-         "type":"object",
-         "properties":{
-            "name":{
-               "type":"string"
-            },
-            "id":{
-               "format":"int64",
-               "type":"integer"
+          },
+          "503": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
             }
-         }
-      },
-      "AuthorizationReqDto":{
-         "type":"object",
-         "properties":{
-            "clientId":{
-               "type":"string"
-            },
-            "clientSecret":{
-               "type":"string"
-            },
-            "userName":{
-               "type":"string"
-            },
-            "password":{
-               "type":"string"
-            }
-         }
-      },
-      "AuthorizationRespDto":{
-         "type":"object",
-         "properties":{
-            "accessToken":{
-               "type":"string"
-            },
-            "expiresInSecs":{
-               "format":"int32",
-               "type":"integer"
-            },
-            "isError":{
-               "type":"boolean"
-            },
-            "errorDescription":{
-               "type":"string"
-            }
-         }
-      },
-      "IActionResult":{
-         "type":"object",
-         "properties":{
-
-         }
+          }
+        }
       }
-   },
-   "securityDefinitions":{
-      "Bearer":{
-         "name":"Authorization",
-         "in":"header",
-         "type":"apiKey",
-         "description":"Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\""
+    },
+    "/api/owners/{ownerId}/imports/{importIdentifier}/status": {
+      "get": {
+        "tags": [
+          "Import"
+        ],
+        "summary": "Returns status information for the specified import identifier.",
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "The owner identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The owner identifier.",
+              "nullable": true
+            }
+          },
+          {
+            "name": "importIdentifier",
+            "in": "path",
+            "description": "The import identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The import identifier.",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportStatusRespDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportStatusRespDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportStatusRespDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundResult"
+                }
+              }
+            }
+          }
+        }
       }
-   },
-   "security":[
-      {
-         "Bearer":[
-
-         ]
+    },
+    "/api/owners/{ownerId}/imports/validate": {
+      "post": {
+        "tags": [
+          "Import"
+        ],
+        "summary": "Returns validation information for the uploaded SwissRETS file.",
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "The owner identifier.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The owner identifier.",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResultRespDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResultRespDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationResultRespDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResult"
+                }
+              }
+            }
+          }
+        }
       }
-   ]
+    },
+    "/api/userinfo": {
+      "get": {
+        "tags": [
+          "Import"
+        ],
+        "summary": "A protected endpoint for authentication testing purposes. Returns information about the currently authenticated user.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfoDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/authorize": {
+      "post": {
+        "tags": [
+          "Import"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationReqDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationReqDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationReqDto"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationReqDto"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationReqDto"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationReqDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationRespDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationRespDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationRespDto"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationRespDto"
+                }
+              },
+              "text/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationRespDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IActionResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MetaInfoRespDto": {
+        "type": "object",
+        "properties": {
+          "acceptsSwissRetsMajorVersions": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "isInMaintenanceMode": {
+            "type": "boolean"
+          },
+          "supportsLocalAssets": {
+            "type": "boolean"
+          },
+          "uploadSupportedMimeTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ImportStatusResponse": {
+        "enum": [
+          "none",
+          "processing",
+          "failed",
+          "completed"
+        ],
+        "type": "string"
+      },
+      "LogLevel": {
+        "enum": [
+          "info",
+          "warn",
+          "error"
+        ],
+        "type": "string"
+      },
+      "ErrorCode": {
+        "enum": [
+          "none",
+          "xmlSchemaValidationFailed",
+          "unsupportedSwissRetsSchemaVersion",
+          "importFileNotFound",
+          "invalidFileExtension",
+          "assetNotFound",
+          "ownerNotFound",
+          "userNotAuthorized",
+          "concurrentImportFound",
+          "attachmentImportFailed",
+          "propertyHasNoAddress",
+          "propertyHasNoUtilization",
+          "propertyHasInvalidAddress",
+          "notEnoughImages",
+          "generalError",
+          "invalidProject"
+        ],
+        "type": "string"
+      },
+      "LogObjectType": {
+        "enum": [
+          "project",
+          "unit",
+          "property"
+        ],
+        "type": "string"
+      },
+      "LogRespDto": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "$ref": "#/components/schemas/LogLevel"
+          },
+          "errorCode": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "objectRefId": {
+            "type": "string",
+            "nullable": true
+          },
+          "objectType": {
+            "$ref": "#/components/schemas/LogObjectType"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "isPersisted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ImportStatisticsRespDto": {
+        "type": "object",
+        "properties": {
+          "totalPropertiesImportedSuccess": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalPropertiesImportedFailed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalAssetsImportedSuccess": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalAssetsImportedFailed": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "processingMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogRespDto"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "ImportStatusRespDto": {
+        "type": "object",
+        "properties": {
+          "importId": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/ImportStatusResponse"
+          },
+          "importStatistics": {
+            "$ref": "#/components/schemas/ImportStatisticsRespDto"
+          }
+        }
+      },
+      "ActionResult": {
+        "type": "object"
+      },
+      "NotFoundResult": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        }
+      },
+      "ValidationResultRespDto": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean"
+          },
+          "validationMessages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LogRespDto"
+            },
+            "nullable": true
+          }
+        }
+      },
+      "UserInfoDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          }
+        }
+      },
+      "AuthorizationReqDto": {
+        "type": "object",
+        "properties": {
+          "clientId": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientSecret": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "AuthorizationRespDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiresInSecs": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isError": {
+            "type": "boolean"
+          },
+          "errorDescription": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "IActionResult": {
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }
