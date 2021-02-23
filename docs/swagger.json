@@ -763,23 +763,47 @@
         "type": "object",
         "properties": {
           "totalPropertiesImportedSuccess": {
+            "description": "Total number of successfully imported properties.",
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
           "totalPropertiesImportedFailed": {
+            "description": "Total number of properties for which the import failed.",
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalPropertiesDeletedSuccess": {
+            "description": "Total number of properties that were deleted implicitly during the import.",
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalPropertiesDeletedFailed": {
+            "description": "The total number of objects for which deletion failed during the import.",
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
           "totalAssetsImportedSuccess": {
+            "description": "Total number of successfully imported assets.",
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
           "totalAssetsImportedFailed": {
+            "description": "Total number of assets for which the import failed.",
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "deletedPropertyIds": {
+            "description": "Optional list of property IDs that were implicitly deleted during the import.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           },
           "processingMessages": {
