@@ -46,7 +46,7 @@ A detailed swagger specification of the API can be found [here](/docs/swagger.js
 
 > Schededules an import for the given owner and returns an import identifier, which can be used to poll the status of the import.
 
-### GET /api/owners/{ownerId}/imports/{importId}
+### GET /api/owners/{ownerId}/imports/{importIdentifier}/status
 
 > Returns status information about the specified import.
 
